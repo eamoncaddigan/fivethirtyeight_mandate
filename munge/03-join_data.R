@@ -14,3 +14,9 @@ mandates <- congress %>%
   mutate(chamber = paste0(chamber, "_share")) %>%
   spread(chamber, share) %>%
   left_join(mandates, ., by = c("party", "election_year"))
+
+# Do a rudimentary average on the house and senate data to capture congressional
+# share.
+mandates <- mandates %>%
+  mutate(incoming_congressional_share = (incoming_house_share+incoming_senate_share)/2,
+         outgoing_congressional_share = (outgoing_house_share+outgoing_senate_share)/2)
